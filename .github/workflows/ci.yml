@@ -8,7 +8,7 @@ on:
 
 jobs:
   hello-jobs:
-    runs-on: ubuntu-test
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -17,7 +17,7 @@ jobs:
         run: echo "🎉 Hello from GitHub Actions"
 
   test:
-    runs-on: ubuntu-test
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
