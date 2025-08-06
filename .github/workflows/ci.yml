@@ -3,6 +3,8 @@ name: CI Pipeline
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   hello-jobs:
@@ -13,3 +15,20 @@ jobs:
 
       - name: Say Hello
         run: echo "🎉 Hello from GitHub Actions"
+
+  test:
+    runs-on: ubuntu-test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
