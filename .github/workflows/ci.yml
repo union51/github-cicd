@@ -1,23 +1,13 @@
-name: CI Pipeline
+name: CI + Deploy
 
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
-  hello-jobs:
+  build-test-deploy:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
 
-      - name: Say Hello
-        run: echo "🎉 Hello from GitHub Actions"
-
-  test:
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -41,5 +31,12 @@ jobs:
       - name: Run Linter
         run: npm run lint
 
-      - name: Run Jest tests
+      - name: Run Tests
         run: npm test
+
+      - name: Deploy to Vercel
+        run: npx vercel --token=$VERCEL_TOKEN --prod
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
